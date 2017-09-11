@@ -13,6 +13,8 @@ def load_data (file):
     mat = np.array(dataset)
     dMat = np.ones((mat.shape[0], mat.shape[1]+1), dtype=np.int)
     dMat[:,1:] = mat
+    global x
+    global y
     x = dMat[:, :-1]
     y = (dMat[:,[dMat.shape[1]-1]])
 
@@ -20,12 +22,12 @@ def load_data (file):
     theta = np.matrix('1; 3; 4')
 
     # print data
-    print ('x: \n', x, '\n')
-    print ('y: \n', y, '\n')
-    print ('theta: \n', theta, '\n')
+    # print ('x: \n', x, '\n')
+    # print ('y: \n', y, '\n')
+    # print ('theta: \n', theta, '\n')
 
     # get cost
-    cost(x, y, theta)
+    # cost(x, y, theta)
     return
 
 # def get_theta(n):
@@ -47,22 +49,42 @@ def cost(x, y, theta):
     H_ySquared = np.power(H_y, 2, dtype='int64')
     summation = np.sum(H_ySquared)
     cost = summation / (2 * x.shape[0])
+    global m
     m = x.shape[0]
     print ("Cost (J): ", cost)
     return
 
 def gradientDescent(x, y, alpha, iters):
-    n = 0
+    n = 1
+    tmp_theta = np.matrix('0;0;0')
+    global cost_history
 
-     
-def graph(cost_history):
-    # graph
-    # y = cost
-    pass
+    while n < iters:
+        tmp_cost = cost(x, y, tmp_theta)
+        new_cost = [n, tmp_cost]
+        # cost_history = np.vstack([cost_history, new_cost])
+        for j in range(0, tmp_theta.shape[0]):
+            H = np.matmul(x, tmp_theta);
+            H_y = (np.subtract(H,y))
+            summation = np.sum(H_y)
+            new_theta = tmp_theta[j][0] - alpha * (1/m) * summation
+            tmp_theta[j][0] = new_theta
+            tmp_theta = np.matrix(tmp_theta)
+
+        n = n + 1
+        print(tmp_theta)
+
+#
+#
+#
+# def graph(cost_history):
+#     # graph
+#     # y = cost
+#     pass
 
 
 file = open("HousePricingRelationship.in", "r")
-alpha = 0
+alpha = 0.34
 iters = 100
 
 load_data(file)
