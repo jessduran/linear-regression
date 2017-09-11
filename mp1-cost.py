@@ -1,10 +1,11 @@
 #!/usr/bin/python
 import numpy as np
+import matplotlib.pyplot as plt
+
 
 x = None
 y = None
 m = None
-cost_history = np.matrix
 
 def load_data (file):
     dataset = []
@@ -21,29 +22,11 @@ def load_data (file):
     # one theta example:
     theta = np.matrix('1; 3; 4')
 
-    # print data
-    # print ('x: \n', x, '\n')
-    # print ('y: \n', y, '\n')
-    # print ('theta: \n', theta, '\n')
-
     # get cost
     # cost(x, y, theta)
     return
 
-# def get_theta(n):
-#     print ('\nSeparate columns using commas (,) and rows using semi-colons (;) \n(i.e.: 1, 2; 3, 4)')
-#     theta = np.matrix(input())
-#
-#     while not (theta.shape[0] == n and theta.shape[1] == 1):
-#         print('Not a valid hypothesis')
-#         print ('\nSeparate columns using commas (,) and rows using semi-colons (;) \n(i.e.: 1, 2; 3, 4)')
-#         theta = np.matrix(input())
-#         if (theta.shape[0] == n):
-#             return theta
-#     return theta
-
 def cost(x, y, theta):
-    print ("calculating cost...")
     H = np.matmul(x, theta);
     H_y = (np.subtract(H,y))
     H_ySquared = np.power(H_y, 2, dtype='int64')
@@ -51,40 +34,39 @@ def cost(x, y, theta):
     cost = summation / (2 * x.shape[0])
     global m
     m = x.shape[0]
-    print ("Cost (J): ", cost)
-    return
+    return cost
 
 def gradientDescent(x, y, alpha, iters):
     n = 1
     tmp_theta = np.matrix('0;0;0')
-    global cost_history
-
+    cost_history = np.empty((0,2))
     while n < iters:
         tmp_cost = cost(x, y, tmp_theta)
         new_cost = [n, tmp_cost]
-        # cost_history = np.vstack([cost_history, new_cost])
+        print (new_cost)
+        cost_history = np.vstack((cost_history, new_cost))
         for j in range(0, tmp_theta.shape[0]):
             H = np.matmul(x, tmp_theta);
-            H_y = (np.subtract(H,y))
+            H_y = (np.subtract(H,y)) 
             summation = np.sum(H_y)
-            new_theta = tmp_theta[j][0] - alpha * (1/m) * summation
+            new_theta = tmp_theta[j][0] - (alpha * (summation / m))
             tmp_theta[j][0] = new_theta
             tmp_theta = np.matrix(tmp_theta)
-
         n = n + 1
-        print(tmp_theta)
 
-#
-#
-#
-# def graph(cost_history):
-#     # graph
-#     # y = cost
-#     pass
+    print (cost_history)
+    graph(cost_history)
+    return
+
+def graph(cost_history):
+    plt.plot(cost_history)
+    plt.ylabel('cost')
+    plt.xlabel('iterations')
+    plt.show()
 
 
 file = open("HousePricingRelationship.in", "r")
-alpha = 0.34
+alpha = 0.5
 iters = 100
 
 load_data(file)
