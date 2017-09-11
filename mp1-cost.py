@@ -1,7 +1,10 @@
 #!/usr/bin/python
 import numpy as np
 
-x, y, m
+x = None
+y = None
+m = None
+cost_history = np.matrix
 
 def load_data (file):
     dataset = []
@@ -49,10 +52,17 @@ def cost(x, y, theta):
     return
 
 def gradientDescent(x, y, alpha, iters):
+    n = 0
+
+     
+def graph(cost_history):
+    # graph
+    # y = cost
+    pass
 
 
 file = open("HousePricingRelationship.in", "r")
-alpha = 1000
+alpha = 0
 iters = 100
 
 load_data(file)
