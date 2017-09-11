@@ -3,8 +3,7 @@
 ### Instructions
 
 ##### Create a program that calculates the cost (J) given a dataset.
-I
-ncluded is the input file "HousePricingRelationship.in". This file contains the dataset for this problem. Each row in the file contains one training example. For each row, there are n input features followed by 1 output value. All values are separated by commas ",".
+Included is the input file "HousePricingRelationship.in". This file contains the dataset for this problem. Each row in the file contains one training example. For each row, there are n input features followed by 1 output value. All values are separated by commas ",".
 
 ##### Inside the program should be two functions:
 
